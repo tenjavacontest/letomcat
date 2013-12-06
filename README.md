@@ -2,7 +2,7 @@ letomcats Ten.java project
 ==========
 Contest
 ------------------------------------------------
-I am taking part of the contest at 16:00 UTC
+I am taking part in the contest at 16:00 UTC
 
 Livestream
 --------------------
