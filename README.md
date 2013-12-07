@@ -6,6 +6,8 @@ This is my contribution to the [ten.java](http://tenjava.com/) plugin contest!
 
 - __Theme:__ -
 - __Time:__ [17:00 UTC](http://www.timeanddate.com/worldclock/fixedtime.html?msg=ten.java&iso=20131207T17&p1=136&ah=10)
+- __Version:__ 1.6.4-R2.0
+- __Livestream:__ [Twitch](http://www.twitch.tv/letomcat)
 
 ---------------------------------------
 
