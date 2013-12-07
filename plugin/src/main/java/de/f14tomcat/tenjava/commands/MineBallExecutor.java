@@ -2,6 +2,7 @@ package de.f14tomcat.tenjava.commands;
 
 import de.f14tomcat.tenjava.Main;
 import de.f14tomcat.tenjava.util.MineBallManager;
+import de.f14tomcat.tenjava.util.NumberUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,13 +21,14 @@ public class MineBallExecutor implements CommandExecutor
     {
         if ( !(sender instanceof Player) )
         {
-            sender.sendMessage( msg( "noconsole" ) );
+            sender.sendMessage( msg( "noConsole" ) );
             return true;
         }
         if ( args.length < 1 || args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "help" ) )
         {
-            sender.sendMessage( msg( "cmdinfo", label + " <enable|disable>", msg( "switchDescription" ) ) );
-            sender.sendMessage( msg( "cmdinfo", label + " status", msg( "statusDescription" ) ) );
+            sender.sendMessage( msg( "commandInfo", label + " <enable|disable>", msg( "switchDescription" ) ) );
+            sender.sendMessage( msg( "commandInfo", label + " get <amount>", msg( "getBallsDescription" ) ) );
+            sender.sendMessage( msg( "commandInfo", label + " status", msg( "statusDescription" ) ) );
             return true;
         }
         if ( args.length >= 1 )
@@ -40,8 +42,7 @@ public class MineBallExecutor implements CommandExecutor
                 {
                     MineBallManager.getInstance().getTrainers().add( sender.getName() );
                     sender.sendMessage( msg( "statusCatch", ChatColor.GREEN + "enabled" ) );
-                    ((Player) sender).getInventory().addItem( MineBallManager.getMineBall( 10 ) );
-                    Main.getInstance().getServer().broadcastMessage( msgWithPrefix( "bcastEnable", sender.getName() ) );
+                    Main.getInstance().getServer().broadcastMessage( msgWithPrefix( "broadcastEnable", sender.getName() ) );
                 }
             } else if ( args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "disable" ) )
             {
@@ -52,13 +53,26 @@ public class MineBallExecutor implements CommandExecutor
                 {
                     MineBallManager.getInstance().getTrainers().remove( sender.getName() );
                     sender.sendMessage( msg( "statusCatch", ChatColor.RED + "disabled" ) );
-                    Main.getInstance().getServer().broadcastMessage( msgWithPrefix( "bcastDisable", sender.getName() ) );
+                    Main.getInstance().getServer().broadcastMessage( msgWithPrefix( "broadcastDisable", sender.getName() ) );
                 }
             } else if ( args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "status" ) )
             {
                 sender.sendMessage( msg( "statusCatch", (MineBallManager.getInstance().isCatching( (Player) sender )) ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled" ) );
             }
-            return true;
+        }
+        if ( args.length >= 2 )
+        {
+            if ( args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "get" ) )
+            {
+                if ( !NumberUtil.isInt( args[ 1 ] ) || NumberUtil.getInt( args[1] ) <= 0 )
+                {
+                    sender.sendMessage( msg( "noInt", args[1] ) );
+                } else
+                {
+                    ((Player) sender).getInventory().addItem( MineBallManager.getMineBall( NumberUtil.getInt( args[ 1 ] ) ) );
+                    sender.sendMessage( msg( "addBalls", NumberUtil.getInt( args[ 1 ] ) ) );
+                }
+            }
         }
         return true;
     }
