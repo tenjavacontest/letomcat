@@ -37,6 +37,7 @@ public class PlayerInteractListener implements Listener
         {
             if ( event.getPlayer().getItemInHand() != null && MineBallManager.isMineBall( event.getPlayer().getItemInHand() ) )
             {
+                //Dont launch MineBall
                 event.setCancelled( true );
                 event.getPlayer().sendMessage( msg( "notCatching" ) );
                 event.getPlayer().updateInventory();
