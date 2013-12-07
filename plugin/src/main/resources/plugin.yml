@@ -1,0 +1,7 @@
+name: MineBall
+version: ${project.version}
+main: de.f14tomcat.tenjava.Main
+commands:
+  mineball:
+    description: MineBall command.
+    aliases: [mball, mineb, mb]
