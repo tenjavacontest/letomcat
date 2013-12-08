@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import de.f14tomcat.tenjava.commands.MineBallExecutor;
 import de.f14tomcat.tenjava.util.Message;
 import de.f14tomcat.tenjava.util.mineball.MineBallManager;
+import de.f14tomcat.tenjava.util.storage.StorageManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin
         Main.instance = this;
         new Message( Locale.ENGLISH );
         new MineBallManager();
+        new StorageManager( getDataFolder() ).init();
         getCommand( "mineball" ).setExecutor( new MineBallExecutor() );
         registerListeners( "de.f14tomcat.tenjava.listener" );
     }
@@ -53,5 +55,9 @@ public class Main extends JavaPlugin
         {
             getLogger().log( Level.WARNING, "Error while registering listeners", ex );
         }
+    }
+
+    public String getVersion() {
+        return ( Main.class.getPackage().getImplementationVersion() == null ) ? "unknown" : Main.class.getPackage().getImplementationVersion();
     }
 }

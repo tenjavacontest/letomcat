@@ -37,7 +37,7 @@ public class EntityDamageByEntityListener implements Listener
                         {
                             MineMon mineMon = new MineMon( event.getEntity().getType() );
                             MineBallManager.getInstance().getTrainers().get( shooter.getName() ).add( mineMon );
-                            shooter.sendMessage( msg( "catched", mineMon.getName() ) );
+                            shooter.sendMessage( msg( "caught", mineMon.getName() ) );
                             shooter.sendMessage( msg( "holderStatus", MineBallManager.getInstance().getTrainers().get( shooter.getName() ).size(), MineBallManager.HOLDER_MAX ) );
                             event.getEntity().remove();
                         }

@@ -31,10 +31,15 @@ public class MineBallExecutor implements CommandExecutor
             sender.sendMessage( msg( "commandInfo", label + " <enable|disable>", msg( "switchDescription" ) ) );
             sender.sendMessage( msg( "commandInfo", label + " get <amount>", msg( "getBallsDescription" ) ) );
             sender.sendMessage( msg( "commandInfo", label + " status", msg( "statusDescription" ) ) );
+            sender.sendMessage( msg( "commandInfo", label + " ver", msg( "versionDescription" ) ) );
             return true;
         }
         if ( args.length >= 1 )
         {
+            if ( args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "ver" ) )
+            {
+                sender.sendMessage( msg("version", Main.getInstance().getVersion()) );
+            }
             if ( args[ 0 ].toLowerCase( Locale.ENGLISH ).equals( "enable" ) )
             {
                 if ( MineBallManager.getInstance().isCatching( (Player) sender ) )

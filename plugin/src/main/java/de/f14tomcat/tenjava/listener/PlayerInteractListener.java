@@ -3,7 +3,9 @@ package de.f14tomcat.tenjava.listener;
 import de.f14tomcat.tenjava.Main;
 import de.f14tomcat.tenjava.util.mineball.MineBallManager;
 import de.f14tomcat.tenjava.util.mineball.MineMon;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Locale;
 
 import static de.f14tomcat.tenjava.util.Message.msg;
 
@@ -43,7 +47,7 @@ public class PlayerInteractListener implements Listener
         {
             if ( event.getItem() != null && MineBallManager.isMineBall( event.getItem() ) )
             {
-                //Dont launch MineBall
+                //Don't launch MineBall
                 event.setCancelled( true );
                 event.getPlayer().sendMessage( msg( "notCatching" ) );
                 event.getPlayer().updateInventory();
@@ -89,10 +93,28 @@ public class PlayerInteractListener implements Listener
         {
             if ( event.getItem() != null && MineBallManager.isMineBallHolder( event.getItem() ) )
             {
-                //Dont open holder view
+                //Don't open holder view
                 event.setCancelled( true );
                 event.getPlayer().sendMessage( msg( "notCatching" ) );
                 event.getPlayer().updateInventory();
+            }
+        }
+    }
+
+    //Handler for MineMons
+    @EventHandler
+    public void onPlayerInteractSpawnMineMon(PlayerInteractEvent event)
+    {
+        if ( event.getItem() != null )
+        {
+            if ( event.getItem().getType() == Material.MONSTER_EGG )
+            {
+                if ( event.getItem().getItemMeta() != null && event.getItem().getItemMeta().getDisplayName().startsWith( "" + ChatColor.YELLOW ) )
+                {
+                    event.setCancelled( true );
+                    event.getClickedBlock().getLocation().getWorld().spawnEntity( event.getClickedBlock().getLocation().add( 0.0, 1.5, 0.0 ), EntityType.valueOf( ChatColor.stripColor( event.getItem().getItemMeta().getDisplayName() ).toUpperCase( Locale.ENGLISH ) ) );
+                    event.getPlayer().getInventory().remove( event.getItem() );
+                }
             }
         }
     }

@@ -29,4 +29,9 @@ public class MineMon
         item.setItemMeta( meta );
         return item;
     }
+
+    public String toString()
+    {
+        return type.toString();
+    }
 }
