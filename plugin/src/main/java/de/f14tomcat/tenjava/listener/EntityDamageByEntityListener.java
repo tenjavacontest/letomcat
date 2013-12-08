@@ -1,16 +1,15 @@
 package de.f14tomcat.tenjava.listener;
 
-import de.f14tomcat.tenjava.util.MineBallManager;
-import org.apache.commons.lang.WordUtils;
+import de.f14tomcat.tenjava.util.mineball.MineBallManager;
+import de.f14tomcat.tenjava.util.mineball.MineMon;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.SpawnEgg;
+
+import static de.f14tomcat.tenjava.util.Message.msg;
 
 public class EntityDamageByEntityListener implements Listener
 {
@@ -31,13 +30,17 @@ public class EntityDamageByEntityListener implements Listener
                 {
                     if ( MineBallManager.getInstance().getMineballs().containsKey( snowball.getEntityId() ) )
                     {
-                        SpawnEgg spawnEgg = new SpawnEgg( event.getEntity().getType() );
-                        ItemStack egg = new ItemStack( spawnEgg.toItemStack( 1 ) );
-                        ItemMeta meta = egg.getItemMeta();
-                        meta.setDisplayName( "\u00A7a" + WordUtils.capitalizeFully( event.getEntity().getType().toString() ) );
-                        egg.setItemMeta( meta );
-                        shooter.getInventory().addItem( egg );
-                        shooter.updateInventory();
+                        if ( MineBallManager.getInstance().getTrainers().get( shooter.getName() ).size() >= MineBallManager.HOLDER_MAX )
+                        {
+                            shooter.sendMessage( msg( "maxHolder" ) );
+                        } else
+                        {
+                            MineMon mineMon = new MineMon( event.getEntity().getType() );
+                            MineBallManager.getInstance().getTrainers().get( shooter.getName() ).add( mineMon );
+                            shooter.sendMessage( msg( "catched", mineMon.getName() ) );
+                            shooter.sendMessage( msg( "holderStatus", MineBallManager.getInstance().getTrainers().get( shooter.getName() ).size(), MineBallManager.HOLDER_MAX ) );
+                            event.getEntity().remove();
+                        }
                     }
                 }
             }

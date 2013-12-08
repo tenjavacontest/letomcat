@@ -3,7 +3,7 @@ package de.f14tomcat.tenjava;
 import com.google.common.reflect.ClassPath;
 import de.f14tomcat.tenjava.commands.MineBallExecutor;
 import de.f14tomcat.tenjava.util.Message;
-import de.f14tomcat.tenjava.util.MineBallManager;
+import de.f14tomcat.tenjava.util.mineball.MineBallManager;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 

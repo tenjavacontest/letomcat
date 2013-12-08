@@ -1,6 +1,6 @@
 package de.f14tomcat.tenjava.listener;
 
-import de.f14tomcat.tenjava.util.MineBallManager;
+import de.f14tomcat.tenjava.util.mineball.MineBallManager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
